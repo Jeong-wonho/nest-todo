@@ -6,15 +6,18 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConfigService } from './config/typeorm.config.service';
 import { ConfigModule } from '@nestjs/config';
+import { ApolloDriver } from '@nestjs/apollo';
+import { join } from 'path';
 
 @Module({
   imports: [
-    GraphQLModule.forRoot({
-      autoSchemaFile: true,
-    }),
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       useClass: TypeOrmConfigService,
+    }),
+    GraphQLModule.forRoot({
+      driver: ApolloDriver,
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
     TodoModule,
   ],

@@ -17,18 +17,20 @@ export class TodoResolver {
   async createTodo(
     @Args('createTodoInput') createTodoInput: CreateTodoDto,
   ): Promise<Todo> {
+    console.log('createTodo');
     return this.todoService.create(createTodoInput);
   }
 
   @Mutation(() => Todo)
   async updateTodo(
-    @Args('UpdateTodoInput') updateTodoInput: UpdateTodoDto,
+    @Args('updateTodoInput') updateTodoInput: UpdateTodoDto,
   ): Promise<Todo> {
     return this.todoService.update(updateTodoInput);
   }
 
   @Mutation(() => Boolean)
   async deleteTodo(@Args('id') id: number): Promise<boolean> {
-    return this.todoService.delete(id);
+    console.log(id);
+    return this.todoService.delete(+id);
   }
 }
